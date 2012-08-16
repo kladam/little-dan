@@ -1,0 +1,21 @@
+body
+{
+    background-color:   #20B35A;
+    margin:             0 auto;
+}
+
+#gameWrapper
+{
+    position:           relative;
+    padding:            0px;
+    margin:             0 auto;
+    width:              800px;
+    height:             600px;
+}
+
+#stage
+{
+    position:           absolute;
+    left:               0px;
+    top:                0px;
+}
