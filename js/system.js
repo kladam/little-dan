@@ -1,18 +1,8 @@
 $(document).ready(function(){
 
-    // global variables
-    var root =
-    {
-        "canvas" : {},
-        "context" : {},
-        "gameWidth" : 800,
-        "gameHeight" : 600,
-        "game" : {},
-        "imageResourceLibrary" : {},
-        "displayList" : {}
-    };
-
     var game;
+
+    var root;
 
     window.requestAnimFrame = (function()
     {
@@ -28,10 +18,7 @@ $(document).ready(function(){
 
     function init()
     {
-        root['canvas'] = $('#stage')[0];
-        root['canvas'].width = root['gameWidth'];
-        root['canvas'].height = root['gameHeight'];
-        root['context'] = root['canvas'].getContext( '2d' );
+        root = new Root($('#stage')[0], 800, 600);
 
         game = new GameLoop(root);
 
@@ -43,11 +30,6 @@ $(document).ready(function(){
         requestAnimFrame( animate );
         game.tick();
         game.draw();
-    }
-
-    function loadImage(name)
-    {
-        console.log('name: ' + name);
     }
 
     // system initialisation and game flow
