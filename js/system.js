@@ -1,8 +1,10 @@
+var LittleDan = {};
+
 $(document).ready(function(){
 
-    var game;
+    LittleDan.game;
 
-    var root;
+    LittleDan.root;
 
     window.requestAnimFrame = (function()
     {
@@ -18,18 +20,18 @@ $(document).ready(function(){
 
     function init()
     {
-        root = new Root($('#stage')[0], 800, 600);
+        LittleDan.root = new Root($('#stage')[0], 800, 600);
 
-        game = new GameLoop(root);
+        LittleDan.game = new GameLoop(LittleDan.root);
 
-        game.gameInit();
+        LittleDan.game.gameInit();
     }
 
     function animate()
     {
         requestAnimFrame( animate );
-        game.tick();
-        game.draw();
+        LittleDan.game.tick();
+        LittleDan.game.draw();
     }
 
     // system initialisation and game flow

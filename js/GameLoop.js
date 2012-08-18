@@ -9,8 +9,6 @@ function GameLoop(Root)
     this.x = 0;
     this.y = 0;
 
-    this.canvasColor = '#ffffff';
-
     this.background;
     this.dan;
     this.ballArray = [];
@@ -18,32 +16,75 @@ function GameLoop(Root)
 
     this.gameInit = function()
     {
-        // register game objects
-        root.loadImage('hello', 'http://localhost:8888/little-dan/assets/img.jpg');
+        // load all the graphics that are needed as display objects
+        root.loadImage('bg', 'http://localhost:8888/little-dan/assets/bg.jpg');
+        root.loadImage('dan', 'http://localhost:8888/little-dan/assets/dan.png');
+
+        // create display objects
+        this.background = new DisplayObject(root.getImage('bg'));
+        root.addToDisplayList(this.background);
+
+        // NEED TO MAKE DAN HIS OWN OBJECT AND MOVE HIS CODE THERE
+
+        this.dan = new DisplayObject(root.getImage('dan'));
+        root.addToDisplayList(this.dan);
+
+        this.dan['speed'] = 0;
+
+        this.dan.moveLeft = function()
+        {
+           this.speed = -5;
+        };
+
+        this.dan.moveRight = function()
+        {
+            this.speed = 5;
+        };
+
+        this.dan.tick = function()
+        {
+            this.x += this.speed;
+
+
+            if(this.x >= 800 - this.getWidth())
+            {
+                this.x = 800 - this.getWidth();
+                this.speed = 0;
+            }
+
+            if(this.x < 0)
+            {
+                this.x = 0;
+                this.speed = 0;
+            }
+        };
+
+        // setup keyboard listener controls
+        window.addEventListener('keydown', function(event)
+        {
+            switch (event.keyCode)
+            {
+                case 37: // Left
+                    LittleDan.game.dan.moveLeft();
+                    break;
+
+                case 39: // Right
+                    LittleDan.game.dan.moveRight();
+                    break;
+            }
+        }, false);
+
+        // TAKE THE ABOVE SECTION OUT OF HERE
     };
 
     this.tick = function()
     {
-
-        // tick game objects
-
-        this.time = new Date().getTime() * 0.002;
-        this.x = Math.sin( this.time ) * (gWidth/4) + (gWidth/2);
-        this.y = Math.cos( this.time * 0.9 ) * (gHeight/4) + (gHeight/2);
+        this.dan.tick();
     };
 
     this.draw = function()
     {
         // draw display list
-
-        context.fillStyle = this.canvasColor;
-        context.fillRect( 0, 0, gWidth, gHeight );
-
-        context.fillStyle = 'rgb(255,0,0)';
-        context.beginPath();
-        context.arc( this.x, this.y, 10, 0, Math.PI * 2, true );
-        context.closePath();
-        context.fill();
-
+        root.draw();
     };
 };
