@@ -27,6 +27,7 @@ function GameLoop(Root)
         // NEED TO MAKE DAN HIS OWN OBJECT AND MOVE HIS CODE THERE
 
         this.dan = new DisplayObject(root.getImage('dan'));
+        this.dan.y = 500;
         root.addToDisplayList(this.dan);
 
         this.dan['speed'] = 0;
@@ -39,6 +40,11 @@ function GameLoop(Root)
         this.dan.moveRight = function()
         {
             this.speed = 5;
+        };
+
+        this.dan.stop = function()
+        {
+            this.speed = 0;
         };
 
         this.dan.tick = function()
@@ -59,7 +65,14 @@ function GameLoop(Root)
             }
         };
 
+
+
         // setup keyboard listener controls
+        window.onkeyup = function()
+        {
+            LittleDan.game.dan.stop();
+        }
+
         window.addEventListener('keydown', function(event)
         {
             switch (event.keyCode)
